@@ -1,0 +1,64 @@
+void brainfuck(String* str) {
+	int programIndex = str;
+    char currentCharacter = 1;
+	int pointer = 0;
+	add memoryBase = calloc(30000, 1);
+
+
+	while(currentCharacter != 0) {
+		currentCharacter = MEMORY[(, programIndex, 1)];
+		programIndex++;
+
+		switch(currentCharacter) {
+			case '+':
+				int temp = (memoryBase, pointer, 1);
+				temp++;
+				(memoryBase, pointer, 1) = temp;
+
+			case '-':
+				int temp = (memoryBase, pointer, 1);
+				temp--;
+				(memoryBase, pointer, 1) = temp;
+				break;
+
+			case '>':
+				pointer++;
+				break;
+
+			case '<':
+				pointer--;
+				break;
+
+			case '[':
+				int temp = (memoryBase, pointer, 1);
+				if(temp != 0) {
+                    programIndex--;
+                    push(programIndex);
+                    programIndex++;
+					break;
+				}
+
+				int openCount = 0;
+				int searchIndex = programIndex;
+				do {
+					currentCharacter = MEMORY[(, searchIndex, 1)];
+					searchIndex++;
+
+                    if(currentCharacter == '[') openCount++;
+                    else if(currentCharacter == ']') openCount--;
+
+                    if(openCount == 0) {
+                        programIndex = searchIndex;
+                    }
+                    
+				} while(currentCharacter != 0);
+
+			case ']':
+                programIndex = pop();
+			case '.':
+                syscall_print(1, lea(memoryBase, pointer, 1), 1);
+			case ',':
+                scanf("%c", (memoryBase, pointer, 1));
+		}
+	}
+}
